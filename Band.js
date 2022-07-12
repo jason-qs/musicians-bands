@@ -12,6 +12,10 @@ const Band = sequelize.define('band', {
     genre: Sequelize.STRING,
 })
 
+const flapJacks =  Band.create({
+    name: "fun",
+});
+
 module.exports = {
-    Band
+    Band,
 };

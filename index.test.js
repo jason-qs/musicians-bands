@@ -1,5 +1,5 @@
 const {sequelize} = require('./db');
-const {Band, Musician} = require('./index')
+const {Band, Musician, Song} = require('./index')
 
 describe('Band and Musician Models', () => {
     /**
@@ -62,4 +62,47 @@ describe('Band and Musician Models', () => {
         expect(musicians.length).toBe(2); //we've added two musicians, so the length should be two
         expect(musicians[0] instanceof Musician).toBeTruthy; //checks that the value at index 0 of the list - a musician object, is in fact a musician object
       });
+
+      test('Can create songs', async()=> {
+        const actualValue = await Song.create({
+            name: "fun",
+            year: 200,
+        });
+        console.log(actualValue.year);
+        expect(actualValue).toBe("fun");
+      });
+
+      test('Song models', async () => {
+        await sequelize.sync({ force: true });
+
+        const actualValue = await Band.create({
+            name: "test",
+            genre: "Pop"
+        })
+
+        const actualValue2 = await Band.create({
+            name: "test2",
+            genre: "Pop"
+        })
+
+        const actualValue3 = await Song.create({
+            title: "song1",
+            year: 1999
+        });
+
+        const actualValue4 = await Song.create({
+            title: "song2",
+            year: 2000
+        });
+
+
+        await actualValue.addSong(actualValue3);
+        await actualValue.addSong(actualValue4);
+        await actualValue2.addSong(actualValue3);
+        await actualValue2.addSong(actualValue4);
+
+        let expectedValue = actualValue.getSongs();
+        expect(expectedValue).toBe(2);
+    })
+
 })

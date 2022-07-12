@@ -1,5 +1,6 @@
-const {Band} = require('./Band')
-const {Musician} = require('./Musician')
+const {Band} = require('./Band');
+const {Musician} = require('./Musician');
+const {Song} = require('./Song');
 
 /**
  * TODO: Create assoications between Musician and Band models
@@ -12,8 +13,14 @@ const {Musician} = require('./Musician')
 
 Musician.belongsTo(Band);
 Band.hasMany(Musician);
+// Song.belongsToMany(Band, { through:
+//  "band_song"});
+// Band.belongsToMany(Song, {through:
+//  "song_band"});
+
 
 module.exports = {
     Band,
-    Musician
+    Musician,
+    Song,
 };
